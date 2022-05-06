@@ -8,20 +8,23 @@ import ListaEspacios from "../componentes/ListaEspacios/ListaEspacios.js";
 const minWidth = rem("640px");
 const maxWidth = rem("1200px");
 
-export const WrapperHeadeSmall = styled.div`
-  padding: 6px 16px;
+export const WrapperHeader = styled.div`
+  padding: 16px;
   background: #304562;
   height: 10vh;
-  width: 95%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+  flex-direction: column;
   @media (min-width: ${minWidth}) {
     padding: 0px 10%;
     height: 15vh;
-    width: 80%;
   }
   @media (min-width: ${maxWidth}) {
     padding: 0px 15%;
-    height: 17vh;
-    width: 70%;
   }
 `;
 
@@ -86,7 +89,7 @@ class Index extends Component {
     }
 
     componentDidMount() { 
-        this.configureViews();
+      this.configureViews();
     }
 
     configureViews = () => {
@@ -103,13 +106,13 @@ class Index extends Component {
 
     unmountApplication = (toMf) => {
         localStorage.setItem("toMf", toMf);
-        singleSpa.unregisterApplication("@savecar/mfregusuario").then(() => {
+        singleSpa.unregisterApplication("@savecar/mfregreserva").then(() => {
           console.log("redireccionando");
         });
     };
     
     handleOnBack = () => {
-        this.unmountApplication("mfbienvenida");
+        this.unmountApplication("mfcliente");
     };
 
     render() {
@@ -119,11 +122,15 @@ class Index extends Component {
             case ESPACIOS_DISPONIBLES:
                 return(
                   <>
-                    <WrapperHeadeSmall>
-                      <HeaderSmall onBack={() => console.log('ir al inicio de cliente')}/>
-                    </WrapperHeadeSmall>
+                    <WrapperHeader>
+                      <HeaderSmall onBack={this.handleOnBack}/>
+                    </WrapperHeader>
                     <WrapperBody>
-                      <ListaEspacios/>
+                      <ListaEspacios
+                        listaEspacios={JSON.parse(localStorage.getItem('listaEspacios')) || null}
+                        listaVehiculos={JSON.parse(localStorage.getItem('listaVehiculos')) || null}
+                        listaServiciosEspacios ={JSON.parse(localStorage.getItem('listaServiciosEspacios')) || null}
+                      />
                     </WrapperBody>
                   </>
 

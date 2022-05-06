@@ -5,7 +5,8 @@ const minWidth = rem("640px");
 const maxWidth = rem("1200px");
 
 export const Wrapper = styled.div`
-display: block;
+  display: flex;
+  justify-content: center;
 `;
 
 export const Card = styled.div`
@@ -57,4 +58,18 @@ export const WrapperDiv = styled.div`
 
 export const WrapperImage = styled.img`
   width: 90%;
+`;
+
+export const Text = styled.p`
+  font-family: rubik;
+  font-size: 10px;
+  display: block;
+  margin: 2px 0px;
+  color: #304562;
+  @media (min-width: ${minWidth}) {
+    font-size: 13px;
+  }
+  @media (min-width: ${maxWidth}) {
+    font-size: 14px;
+  }
 `;

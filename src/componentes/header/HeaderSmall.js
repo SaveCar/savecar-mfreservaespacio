@@ -21,12 +21,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const LogoOnClose = styled.img`
+const LogoMenu = styled.img`
   width: 25px;
-  padding-right: 16px;
   @media (min-width: ${minWidth}) {
     width: 35px;
-    padding-right: 24px;
   }
   @media (min-width: ${maxWidth}) {
     width: 40px;
@@ -73,20 +71,20 @@ const WrapperTitle = styled.div`
   flex-direction: row;
 `;
 
+
+
 const HeaderSmall = ({onBack}) => {
 
   return (
     <>
       <Wrapper>
-        <span onClick={() => onBack()} style={{'cursor':'pointer'}}>
-          <LogoOnClose src={icon_back}/>
-        </span>
-        
+      <span onClick={() => onBack()} style={{'cursor':'pointer'}}>
+        <LogoMenu src={icon_back}></LogoMenu>
+      </span>
         <WrapperTitle>
           <LogoSaveCar src={icon_save_car}/>
           <Title>SaveCar</Title>
         </WrapperTitle>
-
       </Wrapper>
     </>
   );
