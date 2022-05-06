@@ -1,0 +1,24 @@
+input[type="file" i] {
+    width: 98%;
+    padding-left: 3%;
+    height: 30px;
+    border-radius: 10px;
+    font-family: rubik;
+    font-size: 12px;
+    font-weight: 300;
+    margin-bottom: 5%;
+    border: none !important;
+}
+
+@media (min-width: 640px) {
+    input[type="file" i] {
+        height: 40px;
+        font-size: 18px;
+    }
+}
+@media (min-width: 1200px) {
+    input[type="file" i] {
+        height: 45px;
+        font-size: 20px;
+    }
+}
