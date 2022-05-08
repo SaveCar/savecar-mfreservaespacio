@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { rem } from "polished";
 import HeaderSmall from "../componentes/header/HeaderSmall.js";
 import ListaEspacios from "../componentes/ListaEspacios/ListaEspacios.js";
+import DetalleEspacio from "../componentes/DetalleEspacio/DetalleEspacio.js";
 
 const minWidth = rem("640px");
 const maxWidth = rem("1200px");
@@ -20,63 +21,53 @@ export const WrapperHeader = styled.div`
   align-items: center;
   flex-direction: column;
   @media (min-width: ${minWidth}) {
-    padding: 0px 10%;
+    padding: 0px 15%;
     height: 15vh;
   }
   @media (min-width: ${maxWidth}) {
-    padding: 0px 15%;
+    padding: 0px 20%;
   }
 `;
 
 
 export const WrapperBody = styled.div`
-  padding: 0% 5%;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  @media (min-width: ${minWidth}) {
+    padding: 16px 15%;
+   
+  }
+  @media (min-width: ${maxWidth}) {
+    padding: 16px 20%;
+    
+  }
 `;
 
 
 export const WrapperBodyWhite = styled.div`
-  display: flex;
-  justify-content: center;
-  align-content: center;
   background: white;
-  margin-top: 24%;
-  @media (min-width: 370px) {
-    margin-top: 22%;
+  display: flex;
+  flex-direction: column;
+  height: 91.4vh;
+  padding: 16px 0px;
+  @media (min-width: 405px) {
+    height: 190%;;
   }
-  @media (min-width: 400px) {
-    margin-top: 20%;
-  }
-  @media (min-width: 450px) {
-    margin-top: 18%;
-  }
-  @media (min-width: 490px) {
-    margin-top: 16%;
-  }
-  @media (min-width: 550px) {
-    margin-top: 14%;
-  }
-  @media (min-width: 640px) {
-    margin-top: 16%;
-  }
-  @media (min-width: 720px) {
-    margin-top: 14%;
-  }
-  @media (min-width: 820px) {
-    margin-top: 12%;
-  }
-  @media (min-width: 960px) {
-    margin-top: 9%;
-  }
+
   @media (min-width: 1150px) {
-    margin-top: 9%;
+    padding: 16px 15%;
+    height: 180%;
   }
-  @media (min-width: 1290px) {
-    margin-top: 8%;
+  @media (min-width: ${maxWidth}) {
+    padding: 16px 20%;
+    height: 190%;
   }
 `;
 
 
 const ESPACIOS_DISPONIBLES = "ListaEspacios";
+const DETALLE_ESPACIO = "DetalleEspacio";
 
 
 class Index extends Component {
@@ -119,22 +110,33 @@ class Index extends Component {
         const {VIEW} = this.state;
         
         switch (VIEW) {
-            case ESPACIOS_DISPONIBLES:
-                return(
-                  <>
-                    <WrapperHeader>
-                      <HeaderSmall onBack={this.handleOnBack}/>
-                    </WrapperHeader>
-                    <WrapperBody>
-                      <ListaEspacios
-                        listaEspacios={JSON.parse(localStorage.getItem('listaEspaciosDisponibles')) || null}
-                      />
-                    </WrapperBody>
-                  </>
+          case ESPACIOS_DISPONIBLES:
+            return(
+              <>
+                <WrapperHeader>
+                  <HeaderSmall onBack={this.handleOnBack}/>
+                </WrapperHeader>
+                <WrapperBody>
+                  <ListaEspacios
+                    listaEspacios={JSON.parse(localStorage.getItem('listaEspaciosDisponibles')) || null}
+                    onContinue={() => this.changeView(DETALLE_ESPACIO)}
+                  />
+                </WrapperBody>
+              </>
 
-                );
-            
-    
+            );
+          case DETALLE_ESPACIO:
+            return(
+              <>
+                <WrapperHeader>
+                  <HeaderSmall onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
+                </WrapperHeader>
+                
+                <WrapperBodyWhite>
+                  <DetalleEspacio espacio={JSON.parse(localStorage.getItem('espacioSeleccionado'))}/>
+                </WrapperBodyWhite>
+              </>
+            )
           default:
             return '';
         }

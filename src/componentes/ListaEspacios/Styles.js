@@ -12,18 +12,18 @@ export const Wrapper = styled.div`
 export const Card = styled.div`
     background: #FFFFFF;
     border-radius: 20px;
-    width: 100%;
     display: block;
     justify-content: center;
     align-items: center;
     align-content: center;
     margin-top: 16px;
+    width: 95%;
     @media (min-width: ${minWidth}) {
-        width: 65%;
-        margin-top: 24px;
+      width: 80%;
+      margin-top: 24px;
     }
     @media (min-width: ${maxWidth}) {
-        width: 55%;
+      width: 75%;
     }
 `;
 

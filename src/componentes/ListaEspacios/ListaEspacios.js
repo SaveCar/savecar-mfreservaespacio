@@ -9,9 +9,10 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    margin-bottom: 5%;
 `;
 
-export const ListaEspacios = ({listaEspacios}) => {
+export const ListaEspacios = ({listaEspacios, onContinue}) => {
 
     const [espacios, setEspacios] = useState(listaEspacios);
     var listaEspaciosDisponibles = []
@@ -19,7 +20,6 @@ export const ListaEspacios = ({listaEspacios}) => {
     
     if (espacios !== null) {
         espacios.map((data, key) => {
-            console.log(data.imagenEspacio)
             listaEspaciosDisponibles.push(
                 <Espacio 
                     direccion={data.direccion}
@@ -30,6 +30,8 @@ export const ListaEspacios = ({listaEspacios}) => {
                     disponible={data.disponible}
                     imagen={data.imagenEspacio}
                     key={key}
+                    espacio={data}
+                    onContinue={onContinue}
                 />
             )
 
@@ -42,7 +44,7 @@ export const ListaEspacios = ({listaEspacios}) => {
         <>
             { 
                 espacios !== null ?
-                    <Wrapper>
+                    <Wrapper style={{'marginBottom':'2%'}}>
                         {listaEspaciosDisponibles}
                     </Wrapper>
                 : 
