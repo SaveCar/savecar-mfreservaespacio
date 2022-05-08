@@ -67,9 +67,9 @@ export const Text = styled.p`
   margin: 2px 0px;
   color: #304562;
   @media (min-width: ${minWidth}) {
-    font-size: 13px;
+    font-size: 15px;
   }
   @media (min-width: ${maxWidth}) {
-    font-size: 14px;
+    font-size: 16px;
   }
 `;

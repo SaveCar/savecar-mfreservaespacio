@@ -11,40 +11,31 @@ const Wrapper = styled.div`
     flex-direction: column;
 `;
 
-export const ListaEspacios = ({listaEspacios, listaVehiculos, listaServiciosEspacios}) => {
+export const ListaEspacios = ({listaEspacios}) => {
 
     const [espacios, setEspacios] = useState(listaEspacios);
-    const [vehiculos, setVehiculos] = useState(listaVehiculos);
-    const [serviciosEspacio, setServiciosEspacio] = useState(listaServiciosEspacios);
     var listaEspaciosDisponibles = []
-    let nombreServicios = []
-    var numeroTotal = 0;
-  
-    espacios.map((data, key) => {
-        listaEspaciosDisponibles.push(
-            <Espacio 
-                direccion={data.direccionEspacio}
-                tipo={
-                    vehiculos.map((auto) => {
-                        if (auto.idVehiculo === data.vehiculo){
-                            return auto.nombreVehiculo
-                        }
-                    })
-                }
-                servicios={
-                    serviciosEspacio.map((servicio) => {
-                        if (servicio.idEspacio === data.idEspacio){
-                            nombreServicios.push(servicio.nombreServicio)
-                           
-                        } 
-                    })
-                    && nombreServicios.join(', ')
-                }
-                disponible={data.libreEspacio}
-                key={key}
-            />
-        )
-    })
+    
+    
+    if (espacios !== null) {
+        espacios.map((data, key) => {
+            console.log(data.imagenEspacio)
+            listaEspaciosDisponibles.push(
+                <Espacio 
+                    direccion={data.direccion}
+                    precio={data.precio}
+                    tipoCobro={data.tipoCobro}
+                    comuna={data.comuna}
+                    tipo={data.vehiculo}
+                    disponible={data.disponible}
+                    imagen={data.imagenEspacio}
+                    key={key}
+                />
+            )
+
+        })
+    }
+    
 
 
     return(

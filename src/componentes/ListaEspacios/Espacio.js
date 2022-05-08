@@ -1,7 +1,10 @@
 import * as Styles from "./Styles.js";
 import img_prueba from"./../../icon/espacio.jpg";
+const cargarImagen = require.context("../../../../../DJANGO/ms-savecar/", true);
 
-export const Espacio = ({direccion, servicios, tipo, disponible}) => {
+
+
+export const Espacio = ({direccion, precio, tipoCobro, comuna, tipo, disponible, imagen}) => {
     return(
         <>
             <Styles.Card>
@@ -9,7 +12,7 @@ export const Espacio = ({direccion, servicios, tipo, disponible}) => {
                     <Styles.WrapperInline>
                         <Styles.WrapperDiv>
                             <Styles.WrapperImage 
-                                src={img_prueba}
+                                src={cargarImagen(`${ imagen }`)} alt={imagen}
                             />
                         </Styles.WrapperDiv>
                         <Styles.WrapperDiv>
@@ -17,9 +20,21 @@ export const Espacio = ({direccion, servicios, tipo, disponible}) => {
                                 {direccion}
                             </Styles.Text>
 
-                            <Styles.WrapperInline style={{'justifyContent': 'flex-start', 'marginBottom':'0px', 'alignItems':'flex-start'}}>
-                                <Styles.Text style={{'fontWeight':'300', 'textAlign':'justify'}}>
-                                    <b style={{'fontWeight':'400'}}>Servicios:</b> {servicios}
+                            <Styles.WrapperInline style={{'justifyContent': 'flex-start', 'marginBottom':'0px'}}>
+                                <Styles.Text style={{'fontWeight':'400'}}>
+                                    Comuna: 
+                                </Styles.Text>
+                                <Styles.Text style={{'fontWeight':'300', 'marginLeft':'2%', 'textTransform':'capitalize'}}>
+                                    {comuna[0].nombreComuna}
+                                </Styles.Text>
+                            </Styles.WrapperInline>
+
+                            <Styles.WrapperInline style={{'justifyContent': 'flex-start', 'marginBottom':'0px'}}>
+                                <Styles.Text style={{'fontWeight':'400'}}>
+                                    Precio: 
+                                </Styles.Text>
+                                <Styles.Text style={{'fontWeight':'300', 'marginLeft':'2%'}}>
+                                    ${precio} por {tipoCobro}
                                 </Styles.Text>
                             </Styles.WrapperInline>
                             

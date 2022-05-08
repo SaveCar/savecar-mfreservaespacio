@@ -127,9 +127,7 @@ class Index extends Component {
                     </WrapperHeader>
                     <WrapperBody>
                       <ListaEspacios
-                        listaEspacios={JSON.parse(localStorage.getItem('listaEspacios')) || null}
-                        listaVehiculos={JSON.parse(localStorage.getItem('listaVehiculos')) || null}
-                        listaServiciosEspacios ={JSON.parse(localStorage.getItem('listaServiciosEspacios')) || null}
+                        listaEspacios={JSON.parse(localStorage.getItem('listaEspaciosDisponibles')) || null}
                       />
                     </WrapperBody>
                   </>
