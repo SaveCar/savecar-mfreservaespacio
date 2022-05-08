@@ -1,8 +1,7 @@
 import * as Styles from "./Styles.js";
 
-
 export const Espacio = ({direccion, precio, tipoCobro, comuna, tipo, disponible, imagen, espacio, onContinue}) => {
-
+    
     const handleContinue = (data) => {
         localStorage.setItem('espacioSeleccionado', JSON.stringify(data))
         onContinue()

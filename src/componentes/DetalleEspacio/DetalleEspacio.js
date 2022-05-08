@@ -2,12 +2,17 @@ import * as Styles from "./Styles.js";
 import arrow_down from "./../../icon/arrow_down.png";
 import arrow_up from "./../../icon/arrow_up.png";
 import { useEffect, useState } from "react";
-
+import FondoOpaco from "../Modal/FondoOpaco.js";
+import Modal from "../Modal/Modal.js";
 
 export const DetalleEspacio = ({espacio}) => {
 
     const[descripcionDisabled, setDescripcionDisabled] = useState(true)
     const[comentarioDisabled, setComentarioDisabled] = useState(true)
+    const [mainState, setMainState] = useState({
+        isModalOpen: false,
+        isModalClose: false
+    });
     var listaServiciosEspacio = []
 
  
@@ -27,24 +32,31 @@ export const DetalleEspacio = ({espacio}) => {
         }
     }
 
-    const handleComentario = () => {
-        if(comentarioDisabled){
-            console.log('mostrar comentario')
-            setComentarioDisabled(false)
-        }else{
-            console.log('ocultar comentario')
-            setComentarioDisabled(true)
-        }
-    }
+    
+    const openModal = () => {
+        setMainState((prev) => ({ ...prev, ["isModalOpen"]: true }));
+    };
+
+  
 
     return(
         <>
             <Styles.Wrapper>
+                <Modal
+                    isOpen={mainState.isModalOpen}
+                    onClose={() =>
+                        setMainState((prev) => ({ ...prev, ["isModalOpen"]: false }))
+                    }
+                    image={"http://127.0.0.1:8000" + espacio.imagenEspacio}
+                    disponible={espacio.disponible}
+                    setMainState={setMainState}
+                />
                 <Styles.WrapperTitle>
                     <Styles.Title style={{'textTransform':'uppercase'}}>
                         {espacio.direccion}, {espacio.comuna[0].nombreComuna}
                     </Styles.Title>
                 </Styles.WrapperTitle>
+                
                 <Styles.WrapperImage src={"http://127.0.0.1:8000" + espacio.imagenEspacio}/>
                 <Styles.WrapperInline>
                     <Styles.WrapperDiv style={{'width':'70%'}}>
@@ -162,13 +174,16 @@ export const DetalleEspacio = ({espacio}) => {
                 }
 
                 <Styles.WrapperInline style={{'justifyContent': 'center'}}>
-                    <Styles.Button>
+                    <Styles.Button onClick={() => openModal()}>
                         SOLICITAR RESERVA
                     </Styles.Button>
                 </Styles.WrapperInline>
                
             </Styles.Wrapper>
             
+            <FondoOpaco
+                isVisible={mainState.isModalOpen}
+            />
         </>
     )
 }
