@@ -48,9 +48,9 @@ export const ListaEspacios = ({listaEspacios, onContinue}) => {
                         {listaEspaciosDisponibles}
                     </Wrapper>
                 : 
-                    <Styled.Text style={{'marginTop': '5%', 'textAlign':'center', 'color':'#00000040'}}>
+                    <Styled.Message style={{'marginTop': '5%', 'textAlign':'center', 'color':'#00000040'}}>
                         No hay registros
-                    </Styled.Text>
+                    </Styled.Message>
             }
         </>
         

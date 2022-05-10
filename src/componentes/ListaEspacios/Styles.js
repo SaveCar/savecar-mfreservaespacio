@@ -73,3 +73,17 @@ export const Text = styled.p`
     font-size: 16px;
   }
 `;
+
+export const Message = styled.p`
+  font-family: rubik;
+  font-size: 14px;
+  display: block;
+  margin: 2px 0px;
+  color: #304562;
+  @media (min-width: ${minWidth}) {
+    font-size: 19px;
+  }
+  @media (min-width: ${maxWidth}) {
+    font-size: 20px;
+  }
+`;

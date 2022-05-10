@@ -140,7 +140,7 @@ export const DetalleEspacio = ({espacio}) => {
                                 <Styles.Text style={{'fontWeight':'400'}}>
                                     Descripción: 
                                 </Styles.Text>
-                                <Styles.Text style={{'fontWeight':'300', 'marginLeft':'2%', 'textTransform':'Capitalize'}}>
+                                <Styles.Text style={{'fontWeight':'300', 'marginLeft':'2%'}}>
                                 { espacio.descripcion }
                                 </Styles.Text>
                             </Styles.WrapperInline>   
