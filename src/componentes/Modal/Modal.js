@@ -15,6 +15,9 @@ const keyFrameExampleOne = keyframes`
     opacity: 1
   }
 `;
+
+
+
 const BackgroundWrapper = styled.div`
     position: absolute;
     width: 100%;
@@ -33,14 +36,16 @@ const BackgroundWrapper = styled.div`
     }
     @media (min-width: ${maxWidth}) {
       width: 55%;
+      margin-top: -110px;
     }
+   
 `;
 
 const BackgroundWrapperModal = styled.div`
     width: 90%;
     margin: auto;
     margin-bottom: 5%;
-
+    
 `;
 
 const CloseModal = styled.div`
@@ -59,17 +64,20 @@ const CloseModal = styled.div`
 `;
 
 const Imagen = styled.img`
-  width: 80%
+  width: 80%;
+  @media (min-width: ${maxWidth}) {
+    width: 55%;
+  }
 `;
 
 const Icono = styled.img`
-    width: 25px;
-    @media (min-width: ${minWidth}) {
+  width: 25px;
+  @media (min-width: ${minWidth}) {
     width: 35px;
-    }
-    @media (min-width: ${maxWidth}) {
+  }
+  @media (min-width: ${maxWidth}) {
     width: 40px;
-    }
+  }
 `;
 
 
@@ -120,9 +128,9 @@ const Label = styled.label`
 
 const Input = styled.input`
   display: block;
-  width: 90%;
+  width: 100%;
   padding-right: 3%;
-  height: 25px;
+  height: 20px;
   border-radius: 10px;
   color: #304562;
   font-family: rubik;
@@ -130,12 +138,12 @@ const Input = styled.input`
   font-weight: 300;
   text-align: right;
   @media (min-width: ${minWidth}) {
-    height: 35px;
+    height: 25px;
     font-size: 18px;
     padding-left: 2%;
   }
   @media (min-width: ${maxWidth}) {
-    height: 40px;
+    height: 30px;
     font-size: 20px;
   }
 `;
@@ -157,17 +165,15 @@ const Error = styled.small`
 `;
 
 const InputTextArea = styled.textarea`
-  margin-top: 2%;
   width: 95%;
   border-radius: 10px;
-  margin-bottom: 5%;
   height: 70px;
   padding: 2%;
   @media (min-width: ${minWidth}) {
-    height: 100px;
+    height: 50px;
   }
   @media (min-width: ${maxWidth}) {
-    height: 130px;
+    height: 40px;
   }
 `;
 
@@ -204,6 +210,22 @@ const Button = styled.button`
   }
 `;
 
+const WrapperText = styled.div`
+  border: 1px solid rgba(196, 215, 241, 1);
+  background:rgba(196, 215, 241, 0.4);
+  border-radius:10px;
+  padding:3% 3px;
+  width:60%;
+`;
+
+const Line = styled.div`
+  background: rgba(203,187,161,0.6);
+  height: 1px;
+  width: 100%;
+  margin: 3%;
+`;
+
+
 class Modal extends React.Component {
     constructor(props) {
         super(props);
@@ -213,7 +235,20 @@ class Modal extends React.Component {
           comentario: null,
           displayCantidad: 'none',
           mensajeError: null,
-          isValid: false
+          isValid: false,
+          tiempoTotal: '',
+          displayTiempoTotal:'none',
+          mensajeErrorTiempoTotal: null,
+          displayFecha: 'none',
+          mensajeErrorFecha: null,
+          estiloError:{
+            color: 'rgba(158, 44, 44, 1)',
+            border: '1px solid rgba(158, 44, 44, 1)'
+          },
+          cantidadValid: false,
+          tiempoValid: false,
+          fechaValid: false,
+          totalPagar: 0
         };
     }
     componentDidMount() {
@@ -221,6 +256,7 @@ class Modal extends React.Component {
     }
 
     render() {
+
         if (this.props.isOpen === false){
             return null;
         }else{
@@ -236,26 +272,141 @@ class Modal extends React.Component {
         const close = this.props.onClose;
 
         const handleChange = (e) => {
-          try{
-            var num = parseInt(e.target.value)
-            if (num !== NaN && num > 0){
-              this.setState({cantidad: num})
+
+          let num = (e.target.value)
+          this.setState({cantidad: num})
+
+          if (num > this.state.disponible){
+            this.setState({mensajeError: `La cantidad máxima que puede solicitar es ${this.props.disponible}`})
+            this.setState({displayCantidad: 'block'})
+            this.setState({cantidad:''})
+            this.setState({isValid: false});
+            this.setState({cantidadValid: false})
+          }
+          else if (num === '0'){
+            this.setState({mensajeError: `Debes ingresar un número válido`})
+            this.setState({displayCantidad: 'block'})
+            this.setState({cantidad:''})
+            this.setState({isValid: false});
+            this.setState({cantidadValid: false})
+          }
+          else if (num.length < 1){
+            this.setState({mensajeError: `Debes ingresar una cantidad a reservar`})
+            this.setState({displayCantidad: 'block'})
+            this.setState({isValid: false});
+            this.setState({cantidadValid: false})
+          }
+          else{
+            this.setState({displayCantidad: 'none'})
+            this.setState({cantidadValid: true})
+
+            if (this.state.tiempoValid && this.state.fechaValid) {
+              this.setState({isValid: true})
             }
-            else{
-              this.setState({cantidad: null})
-            }
-                        
-            //validar que valor no sea mayor a disponible para activar boton
-            if (this.state.cantidad > this.state.disponible){
-              this.setState({mensajeError: `La cantidad máxima que puede solicitar es ${this.props.disponible}`})
-              this.setState({displayCantidad: 'block'})
-              this.setState({isValid: false});
-            }else{
-              this.setState({displayCantidad: 'none'})
+
+            if (this.state.tiempoTotal){
+              let precio = (this.state.tiempoTotal * this.props.precio) * this.state.cantidad
+              this.setState({totalPagar: precio});
             }
           }
-          catch{
-            console.log(e.target.value)
+        }
+
+        const handleChangeTiempo = (e) => {
+          let tiempo = e.target.value
+          this.setState({tiempoTotal: tiempo})
+
+          if (tiempo === '0'){
+            this.setState({mensajeErrorTiempoTotal: `Debes ingresar un número válido`})
+            this.setState({displayTiempoTotal: 'block'})
+            this.setState({tiempoTotal:''})
+            this.setState({isValid: false});
+            this.setState({tiempoValid: false})
+          }
+          else if (tiempo.length < 1){
+            this.setState({mensajeErrorTiempoTotal: `Debes ingresar un número de ${this.props.tipoCobro}s`})
+            this.setState({displayTiempoTotal: 'block'})
+            this.setState({tiempoValid: false})
+            this.setState({isValid: false});
+          }
+          else{
+            this.setState({displayTiempoTotal: 'none'})
+            this.setState({tiempoValid: true})
+
+            if (this.state.cantidadValid && this.state.fechaValid) {
+              this.setState({isValid: true})
+            }
+
+            if (this.state.cantidad){
+              let precio = (this.state.tiempoTotal * this.props.precio) * this.state.cantidad
+              this.setState({totalPagar: precio});
+            }
+          }
+        }
+
+        const handleChangeFecha = (e) => {
+          let fecha = e.target.value
+          this.setState({fechaInicio: fecha})
+
+          let diaReserva = new Date(fecha).getDate() + 1
+          let mesReserva = new Date(fecha).getMonth() + 1
+          let anioReserva = new Date(fecha).getFullYear()
+          
+          let diaActual = new Date().getDate()
+          let mesActual = new Date().getMonth() + 1
+          let anioActual = new Date().getFullYear()
+
+          if (fecha === undefined){
+            this.setState({mensajeErrorFecha: `Debes seleccionar una fecha`})
+            this.setState({displayFecha: 'block'})
+            this.setState({fechaValid: false})
+            this.setState({isValid: false});
+          }else{
+            //año no sea menos al atual
+            if (anioReserva < anioActual){
+              this.setState({mensajeErrorFecha: `Debes seleccionar una fecha igual o mayor a la actual`})
+              this.setState({displayFecha: 'block'})
+              this.setState({fechaValid: false})
+              this.setState({isValid: false});
+            }else {
+              //mes no sea menos al atual
+              if (mesReserva < mesActual){
+                this.setState({mensajeErrorFecha: `Debes seleccionar una fecha igual o mayor a la actual`})
+                this.setState({displayFecha: 'block'})
+                this.setState({fechaValid: false})
+                this.setState({isValid: false});
+              }else if (mesReserva === mesActual){
+                //dia no sea menos al actual
+                if (diaReserva === diaActual){
+                  this.setState({displayFecha: 'none'})
+                  this.setState({fechaValid: true})
+
+                  if (this.state.cantidadValid && this.state.tiempoValid) {
+                    this.setState({isValid: true})
+                  }
+
+                }else if (diaReserva > diaActual){
+                  this.setState({displayFecha: 'none'})
+                  this.setState({fechaValid: true})
+
+                  if (this.state.cantidadValid && this.state.tiempoValid) {
+                    this.setState({isValid: true})
+                  }
+                }else {
+                  this.setState({mensajeErrorFecha: `Debes seleccionar una fecha igual o mayor a la actual`})
+                  this.setState({displayFecha: 'block'})
+                  this.setState({fechaValid: false})
+                  this.setState({isValid: false});
+                }
+              }
+              else{
+                this.setState({displayFecha: 'none'})
+                this.setState({fechaValid: true})
+
+                if (this.state.cantidadValid && this.state.tiempoValid) {
+                  this.setState({isValid: true})
+                }
+              }
+            }
           }
         }
 
@@ -263,16 +414,128 @@ class Modal extends React.Component {
           if (this.state.cantidad > this.state.disponible){
             this.setState({mensajeError: `La cantidad máxima que puede solicitar es ${this.props.disponible}`})
             this.setState({displayCantidad: 'block'})
+            this.setState({cantidad:''})
             this.setState({isValid: false});
+            this.setState({cantidadValid: false})
           }
-          else if (this.state.cantidad === null){
+          else if (this.state.cantidad === '0'){
             this.setState({mensajeError: `Debes ingresar un número válido`})
             this.setState({displayCantidad: 'block'})
+            this.setState({cantidad:''})
             this.setState({isValid: false});
+            this.setState({cantidadValid: false})
+          }
+          else if (this.state.cantidad.length < 1){
+            this.setState({mensajeError: `Debes ingresar una cantidad a reservar`})
+            this.setState({displayCantidad: 'block'})
+            this.setState({isValid: false});
+            this.setState({cantidadValid: false})
           }
           else{
             this.setState({displayCantidad: 'none'})
-            this.setState({isValid: true});
+            this.setState({cantidadValid: true})
+
+            if (this.state.tiempoValid && this.state.fechaValid) {
+              this.setState({isValid: true})
+            }
+
+            if (this.state.tiempoTotal){
+              let precio = (this.state.tiempoTotal * this.props.precio) * this.state.cantidad
+              this.setState({totalPagar: precio});
+            }
+          }
+        }
+
+        const handleBlurTiempo = (e) => {
+          if (this.state.tiempoTotal === '0'){
+            this.setState({mensajeErrorTiempoTotal: `Debes ingresar un número válido`})
+            this.setState({displayTiempoTotal: 'block'})
+            this.setState({tiempoTotal:''})
+            this.setState({isValid: false});
+            this.setState({tiempoValid: false})
+          }
+          else if (this.state.tiempoTotal.length < 1){
+            this.setState({mensajeErrorTiempoTotal: `Debes ingresar un número de ${this.props.tipoCobro}s`})
+            this.setState({displayTiempoTotal: 'block'})
+            this.setState({tiempoValid: false})
+            this.setState({isValid: false});
+          }
+          else{
+            this.setState({displayTiempoTotal: 'none'})
+            this.setState({tiempoValid: true})
+
+            if (this.state.cantidadValid && this.state.fechaValid) {
+              this.setState({isValid: true})
+            }
+
+            if (this.state.cantidad){
+              let precio = (this.state.tiempoTotal * this.props.precio) * this.state.cantidad
+              this.setState({totalPagar: precio});
+            }
+          }
+        }
+
+        const handleBlurFecha = (e) => {
+          let diaReserva = new Date(this.state.fechaInicio).getDate() + 1
+          let mesReserva = new Date(this.state.fechaInicio).getMonth() + 1
+          let anioReserva = new Date(this.state.fechaInicio).getFullYear()
+          
+          let diaActual = new Date().getDate()
+          let mesActual = new Date().getMonth() + 1
+          let anioActual = new Date().getFullYear()
+          
+          if (this.state.fechaInicio === undefined){
+            this.setState({mensajeErrorFecha: `Debes seleccionar una fecha`})
+            this.setState({displayFecha: 'block'})
+            this.setState({fechaValid: false})
+            this.setState({isValid: false});
+          }else{
+            //año no sea menos al atual
+            if (anioReserva < anioActual){
+              this.setState({mensajeErrorFecha: `Debes seleccionar una fecha igual o mayor a la actual`})
+              this.setState({displayFecha: 'block'})
+              this.setState({fechaValid: false})
+              this.setState({isValid: false});
+            }else {
+              //mes no sea menos al atual
+              if (mesReserva < mesActual){
+                this.setState({mensajeErrorFecha: `Debes seleccionar una fecha igual o mayor a la actual`})
+                this.setState({displayFecha: 'block'})
+                this.setState({fechaValid: false})
+                this.setState({isValid: false});
+              }else if (mesReserva === mesActual){
+                //dia no sea menos al actual
+                if (diaReserva === diaActual){
+                  this.setState({displayFecha: 'none'})
+                  this.setState({fechaValid: true})
+
+                  if (this.state.cantidadValid && this.state.tiempoValid) {
+                    this.setState({isValid: true})
+                  }
+
+                }else if (diaReserva > diaActual){
+                  this.setState({displayFecha: 'none'})
+                  this.setState({fechaValid: true})
+
+                  if (this.state.cantidadValid && this.state.tiempoValid) {
+                    this.setState({isValid: true})
+                  }
+                }else {
+                  this.setState({mensajeErrorFecha: `Debes seleccionar una fecha igual o mayor a la actual`})
+                  this.setState({displayFecha: 'block'})
+                  this.setState({fechaValid: false})
+                  this.setState({isValid: false});
+                }
+              }
+              else{
+                this.setState({displayFecha: 'none'})
+                this.setState({fechaValid: true})
+
+                if (this.state.cantidadValid && this.state.tiempoValid) {
+                  this.setState({isValid: true})
+                }
+              }
+            }
           }
         }
 
@@ -281,9 +544,25 @@ class Modal extends React.Component {
           this.setState({comentario: comentario});
         }
 
+        const handleOnContinue = () => {
+          const solicitud = {
+            'cantidadEspacio' : this.state.cantidad,
+            'fechaInicio' : this.state.fechaInicio,
+            'cantidadTiempo' : this.state.tiempoTotal,
+            'comentario' : this.state.comentario,
+            'precioTotal' : this.state.totalPagar,
+            'espacio': this.props.espacio,
+            'usuario': JSON.parse(localStorage.getItem('userData')).data.idUsuario,
+            'tipoCobro': this.props.tipoCobro
+          }
+
+          localStorage.setItem('datosSolicitudReserva', JSON.stringify(solicitud))
+          this.props.onContinue()
+        }
+
         return (
         
-          <BackgroundWrapper>
+            <BackgroundWrapper>
               <BackgroundWrapperModal>
                   <CloseModal>
                       <span onClick={()=>close()} style={{'cursor':'pointer'}}> 
@@ -294,26 +573,28 @@ class Modal extends React.Component {
                     <WrapperDiv style={{'width':'40%'}}>
                       <Imagen src={this.props.image}/>
                     </WrapperDiv>
-                    <WrapperDiv style={{'background':'#C4D7F1', 'borderRadius':'10px', 'padding':'3% 3px', 'width':'60%'}}>
+                    <WrapperText>
                       <Text style={{'fontWeight':'300', 'marginLeft':'2%', 'textAlign':'justify', 'marginRight':'2%'}}>
                         Para confirmar solicitud de la reserva, es necesario que complete los siguientes datos
                       </Text>
-                    </WrapperDiv>
+                    </WrapperText>
                   </WrapperInline>
 
                   <WrapperInline>
-                    <WrapperDiv style={{'width':'50%', 'justifyContent':'flex-start'}}>
-                      <Label>
-                        Cantidad a reservar:
+                    <WrapperDiv style={{'width':'60%', 'justifyContent':'flex-start'}}>
+                      <Label style={this.state.displayCantidad === 'block' ? {'color':this.state.estiloError.color} : {}}>
+                        Cantidad de espacios a reservar
                       </Label>
                     </WrapperDiv>
-                    <WrapperDiv style={{'width':'50%', 'justifyContent':'flex-start'}}>
+                    <WrapperDiv style={{'width':'38%', 'justifyContent':'flex-start'}}>
                       <Input
+                      style={this.state.displayCantidad === 'block' ? {'border':this.state.estiloError.border} : {}}
                         placeholder="10"
                         type={''}
                         value={this.state.cantidad}
                         onChange={(e) => handleChange(e)}
                         onBlur={(e) => handleBlur(e)}
+                        onKeyPress={(event) => {if (!/[0-9]/.test(event.key)) {event.preventDefault();}}}
                       />
                     </WrapperDiv>
                   </WrapperInline>
@@ -322,11 +603,58 @@ class Modal extends React.Component {
                   >
                     {this.state.mensajeError}
                   </Error>
+
+                  <WrapperInline>
+                    <WrapperDiv style={{'width':'60%', 'justifyContent':'flex-start'}}>
+                      <Label style={this.state.displayTiempoTotal === 'block' ? {'color':this.state.estiloError.color} : {}}>
+                        Número de {this.props.tipoCobro}s
+                      </Label>
+                    </WrapperDiv>
+                    <WrapperDiv style={{'width':'38%', 'justifyContent':'flex-start'}}>
+                      <Input
+                        style={this.state.displayTiempoTotal === 'block' ? {'border':this.state.estiloError.border} : {}}
+                        placeholder="1"
+                        type={''}
+                        maxLength={'2'}
+                        value={this.state.tiempoTotal}
+                        onChange={(e) => handleChangeTiempo(e)}
+                        onBlur={(e) => handleBlurTiempo(e)}
+                        onKeyPress={(event) => {if (!/[0-9]/.test(event.key)) {event.preventDefault();}}}
+                      />
+                    </WrapperDiv>
+                  </WrapperInline>
+                  <Error
+                    style={{'display':this.state.displayTiempoTotal}}
+                  >
+                    {this.state.mensajeErrorTiempoTotal}
+                  </Error>
                   
+                  <WrapperInline>
+                    <WrapperDiv style={{'width':'60%', 'justifyContent':'flex-start'}}>
+                      <Label style={this.state.displayFecha === 'block' ? {'color':this.state.estiloError.color} : {}}>
+                        Fecha inicio de la reserva
+                      </Label>
+                    </WrapperDiv>
+                    <WrapperDiv style={{'width':'38%', 'justifyContent':'flex-start'}}>
+                      <Input
+                        style={this.state.displayFecha === 'block' ? {'border':this.state.estiloError.border} : {}}
+                        type={'date'}
+                        maxLength={'2'}
+                        value={this.state.fechaInicio}
+                        onChange={(e) => handleChangeFecha(e)}
+                        onBlur={(e) => handleBlurFecha(e)}
+                      />
+                    </WrapperDiv>
+                  </WrapperInline>
+                  <Error
+                    style={{'display':this.state.displayFecha}}
+                  >
+                    {this.state.mensajeErrorFecha}
+                  </Error>
 
                   <WrapperInput>
-                    <Label>
-                      Comentario
+                    <Label style={{'height':'20px', 'marginTop':'3%'}}>
+                      Comentario (opcional)
                     </Label>
                     <InputTextArea
                       type="text"
@@ -336,10 +664,19 @@ class Modal extends React.Component {
                     />
                   </WrapperInput>
 
+                  <Line/>
+
+                  <WrapperInline style={{'justifyContent': 'space-evenly', 'marginBottom':'4%'}}>
+                    <Label>Valor total: </Label>
+                    <Label> $ {this.state.totalPagar} </Label>
+                  </WrapperInline>
+
                   {
                     this.state.isValid &&
                       <WrapperButton>
-                        <Button>
+                        <Button
+                          onClick={() => handleOnContinue()}
+                        >
                           ENVIAR SOLICITUD
                         </Button>
                       </WrapperButton>
@@ -347,9 +684,8 @@ class Modal extends React.Component {
                  
               </BackgroundWrapperModal>
           </BackgroundWrapper>
-            
           
-        )
+      )
     }
 }
 export default Modal;

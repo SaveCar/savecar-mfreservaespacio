@@ -5,6 +5,7 @@ import { rem } from "polished";
 import HeaderSmall from "../componentes/header/HeaderSmall.js";
 import ListaEspacios from "../componentes/ListaEspacios/ListaEspacios.js";
 import DetalleEspacio from "../componentes/DetalleEspacio/DetalleEspacio.js";
+import CheckCarga from "./../componentes/CheckCarga/CheckCarga.js"
 
 const minWidth = rem("640px");
 const maxWidth = rem("1200px");
@@ -31,7 +32,6 @@ export const WrapperHeader = styled.div`
 
 
 export const WrapperBody = styled.div`
-  padding: 16px;
   display: flex;
   flex-direction: column;
   @media (min-width: ${minWidth}) {
@@ -45,29 +45,13 @@ export const WrapperBody = styled.div`
 `;
 
 
-export const WrapperBodyWhite = styled.div`
-  background: white;
-  display: flex;
-  flex-direction: column;
-  height: 91.4vh;
-  padding: 16px 0px;
-  @media (min-width: 405px) {
-    height: 190%;;
-  }
-
-  @media (min-width: 1150px) {
-    padding: 16px 15%;
-    height: 180%;
-  }
-  @media (min-width: ${maxWidth}) {
-    padding: 16px 20%;
-    height: 190%;
-  }
+export const WrapperBodyBlue = styled.div`
+  background: #C4D7F1 !important;
 `;
-
 
 const ESPACIOS_DISPONIBLES = "ListaEspacios";
 const DETALLE_ESPACIO = "DetalleEspacio";
+const GUARDAR_DATOS = "CheckCarga";
 
 
 class Index extends Component {
@@ -112,7 +96,7 @@ class Index extends Component {
         switch (VIEW) {
           case ESPACIOS_DISPONIBLES:
             return(
-              <>
+              < div style={{'background':'#C4D7F1','height':'100vh'}}>
                 <WrapperHeader>
                   <HeaderSmall onBack={this.handleOnBack}/>
                 </WrapperHeader>
@@ -122,7 +106,7 @@ class Index extends Component {
                     onContinue={() => this.changeView(DETALLE_ESPACIO)}
                   />
                 </WrapperBody>
-              </>
+              </div>
 
             );
           case DETALLE_ESPACIO:
@@ -132,10 +116,26 @@ class Index extends Component {
                   <HeaderSmall onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
                 </WrapperHeader>
                 
-                <WrapperBodyWhite>
-                  <DetalleEspacio espacio={JSON.parse(localStorage.getItem('espacioSeleccionado'))}/>
-                </WrapperBodyWhite>
+                <WrapperBody>
+                  <DetalleEspacio 
+                    espacio={JSON.parse(localStorage.getItem('espacioSeleccionado'))}
+                    onContinue={() => this.changeView(GUARDAR_DATOS)}
+                  />
+                </WrapperBody>
               </>
+            )
+          case GUARDAR_DATOS:
+            return(
+              < div style={{'background':'#C4D7F1','height':'100vh'}}>
+                <WrapperHeader>
+                  <HeaderSmall onBack={() => this.changeView(DETALLE_ESPACIO)}/>
+                </WrapperHeader>
+                <WrapperBody>
+                  <CheckCarga
+                    
+                  />
+                </WrapperBody>
+              </div>
             )
           default:
             return '';

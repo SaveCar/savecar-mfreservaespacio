@@ -15,10 +15,9 @@ const Spinner = styled.div`
     border-radius: 50%;
     height: 120px;
     width: 120px;
-    margin-top: 65% !important;
+    margin-top: 15% !important;
     margin: auto;
     animation: spin 2s linear infinite;
-
     @keyframes spin {
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
@@ -90,19 +89,26 @@ const CheckCarga = () => {
 
     useEffect(() => {
         setTimeout(function() {
-            let infoUsuario = JSON.parse(localStorage.getItem('guardarUsuario'));
-            GuardarUsuario(infoUsuario.email, infoUsuario.password, infoUsuario.name, infoUsuario.apPaterno, infoUsuario.apMaterno, infoUsuario.perfil)
-                .then((res) => {
-                    
-                    if (res.status === 201){
-                        setRespuesta(true);
-                    }else{
-                        setRespuesta(false);
-                    }
-                })
-                .catch((e) => {
-                    setRespuesta(false);
-                })
+          const datosSolicitud = JSON.parse(localStorage.getItem('datosSolicitudReserva'))
+          console.log(datosSolicitud)
+          //calcular fecha de termino
+          /**
+           switch (datosSolicitud.tipoCobro){
+             case (Media Hora):
+               return ()
+              case (Hora):
+                return ()
+              case (Día):
+                returb()
+              case (Año):
+                return ()
+              default: 
+                return()
+            }
+           */
+          /*
+            Guadar en bd => GuardarSolicitudReserva
+          */
         },3000);
     },[])
 
@@ -112,14 +118,12 @@ const CheckCarga = () => {
                 respuesta === null ?
                     <Wrapper>
                         <Spinner/>
-                        <Title>
-                            Creando cuenta
-                        </Title>
+                        <Title/>
                         <SubTitle>
-                            Puede tardar unos segundos
+                            Enviando solicitud
                         </SubTitle>
                         <Text>
-                            Gracias por preferirnos
+                            Puede demorar unos minutos
                         </Text>
                     </Wrapper>
 

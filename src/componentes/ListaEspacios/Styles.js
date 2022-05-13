@@ -19,11 +19,11 @@ export const Card = styled.div`
     margin-top: 16px;
     width: 95%;
     @media (min-width: ${minWidth}) {
-      width: 80%;
+      width: 90%;
       margin-top: 24px;
     }
     @media (min-width: ${maxWidth}) {
-      width: 75%;
+      width: 85%;
     }
 `;
 
@@ -38,9 +38,6 @@ export const WrapperInline = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  @media (min-width: ${minWidth}) {
-    margin-bottom: 5%;
-  }
 `;
 
 

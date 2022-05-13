@@ -7,26 +7,17 @@ const headers = {
     'Access-Control-Allow-Origin': '*'
 };
 
-export const ValidarCorreoElectronico = (correo) => {
-  return axios.get(
-    `http://127.0.0.1:8000/api/validar/correo/${correo}`,
-    {
-      headers,
-    }
-  )
-}
 
-
-export const GuardarUsuario = (email, password, name, apPaterno, apMaterno, perfil) => {
+export const GuardarSolicitudReserva = (fechaIniReserva, fechaFinReserva, totalTiempoReserva, capacidadReserva, apMaespacioterno, usuario) => {
   return axios.post(
-    `http://127.0.0.1:8000/api/guardar/usuario`,
+    `http://127.0.0.1:8000/api/guardar/solicitud-reserva`,
     {  
-      correoUsuario: email,
-      claveUsuario: password,   
-      nombreUsuario: name,   
-      apPaternoUsuario: apPaterno,    
-      apMaternoUsuario: apMaterno,    
-      perfilUsuario: perfil
+      fechaIniReserva : fechaIniReserva,
+      fechaFinReserva : fechaFinReserva,
+      totalTiempoReserva: totalTiempoReserva, 
+      capacidadReserva: capacidadReserva,
+      espacio : espacio,
+      usuario : usuario
     },
     {
       headers,

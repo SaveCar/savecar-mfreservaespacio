@@ -131,7 +131,7 @@ background: #F6EBCF;
 color: #304562;
 border: 1px solid #CBBBA1; 
 cursor: pointer;
-margin-top: 5%;
+margin: 5% 0%;
 @media (min-width: ${minWidth}) {
   font-size: 25px;
   height: 60px;

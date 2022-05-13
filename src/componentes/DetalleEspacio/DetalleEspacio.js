@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import FondoOpaco from "../Modal/FondoOpaco.js";
 import Modal from "../Modal/Modal.js";
 
-export const DetalleEspacio = ({espacio}) => {
+export const DetalleEspacio = ({espacio, onContinue}) => {
 
     const[descripcionDisabled, setDescripcionDisabled] = useState(true)
     const[comentarioDisabled, setComentarioDisabled] = useState(true)
@@ -49,7 +49,11 @@ export const DetalleEspacio = ({espacio}) => {
                     }
                     image={"http://127.0.0.1:8000" + espacio.imagenEspacio}
                     disponible={espacio.disponible}
+                    tipoCobro={espacio.tipoCobro}
                     setMainState={setMainState}
+                    onContinue={onContinue}
+                    precio={espacio.precio}
+                    espacio={espacio.idEspacio}
                 />
                 <Styles.WrapperTitle>
                     <Styles.Title style={{'textTransform':'uppercase'}}>
