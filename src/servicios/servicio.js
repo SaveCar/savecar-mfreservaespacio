@@ -8,12 +8,11 @@ const headers = {
 };
 
 
-export const GuardarSolicitudReserva = (fechaIniReserva, fechaFinReserva, totalTiempoReserva, capacidadReserva, apMaespacioterno, usuario) => {
+export const GuardarSolicitudReserva = (fechaIniReserva, totalTiempoReserva, capacidadReserva, espacio, usuario) => {
   return axios.post(
     `http://127.0.0.1:8000/api/guardar/solicitud-reserva`,
     {  
       fechaIniReserva : fechaIniReserva,
-      fechaFinReserva : fechaFinReserva,
       totalTiempoReserva: totalTiempoReserva, 
       capacidadReserva: capacidadReserva,
       espacio : espacio,

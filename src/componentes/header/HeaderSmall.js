@@ -3,7 +3,8 @@ import { rem } from "polished";
 import icon_back from "./../../icon/back.svg";
 import icon_save_car from "./../../icon/logo.svg";
 
-const minWidth = rem("640px");
+const minWidth1 = rem("600px");
+const minWidth2 = rem("750px");
 const maxWidth = rem("1200px");
 
 const Wrapper = styled.div`
@@ -13,50 +14,45 @@ const Wrapper = styled.div`
   flex-wrap: nowrap;
   flex-direction: row;
   width: 100%;
-  @media (min-width: ${minWidth}) {
-    width: 100%;
-  }
-  @media (min-width: ${maxWidth}) {
-    width: 100%;
-  }
 `;
 
+
 const LogoMenu = styled.img`
-  width: 25px;
-  @media (min-width: ${minWidth}) {
-    width: 35px;
+  width: 20px;
+  @media (min-width: ${minWidth1}) {
+    width: 25px;
   }
-  @media (min-width: ${maxWidth}) {
-    width: 40px;
+  @media (min-width: ${minWidth2}) {
+    width: 30px;
   }
 `;
 
 const LogoSaveCar = styled.img`
   background: #FFF9D5;
   border-radius: 100%;
-  padding: 10px;
-  width: 25px;
-  @media (min-width: ${minWidth}) {
-    width: 40px;
+  padding: 5px;
+  width: 20px;
+  @media (min-width: ${minWidth1}) {
+    width: 25px;
   }
-  @media (min-width: ${maxWidth}) {
-    width: 50px;
+  @media (min-width: ${minWidth2}) {
+    width: 30px;
   }
 `;
 
 const Title = styled.h1`
-  font-size: 30px;
+  font-size: 20px;
   color: #FFF9D5;
   font-weight: 700;
   font-family: rubik;
-  margin-left: 7px;
-  @media (min-width: ${minWidth}) {
-    font-size: 40px;
-    margin-left: 10px;
+  margin-left: 5px;
+  @media (min-width: ${minWidth1}) {
+    font-size: 25px;
+    margin-left: 6px;
   }
-  @media (min-width: ${maxWidth}) {
-    font-size: 47px;
-    margin-left: 14px;
+  @media (min-width: ${minWidth2}) {
+    font-size: 30px;
+    margin-left: 11px;
   }
 `;
 
@@ -70,8 +66,6 @@ const WrapperTitle = styled.div`
   flex-wrap: nowrap;
   flex-direction: row;
 `;
-
-
 
 const HeaderSmall = ({onBack}) => {
 

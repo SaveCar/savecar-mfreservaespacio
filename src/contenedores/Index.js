@@ -7,11 +7,13 @@ import ListaEspacios from "../componentes/ListaEspacios/ListaEspacios.js";
 import DetalleEspacio from "../componentes/DetalleEspacio/DetalleEspacio.js";
 import CheckCarga from "./../componentes/CheckCarga/CheckCarga.js"
 
-const minWidth = rem("640px");
+const minWidth1 = rem("600px");
+const minWidth2 = rem("750px");
+const minWidth3 = rem("950px");
 const maxWidth = rem("1200px");
 
 export const WrapperHeader = styled.div`
-  padding: 16px;
+  padding: 0px 16px;
   background: #304562;
   height: 10vh;
   display: flex;
@@ -21,32 +23,45 @@ export const WrapperHeader = styled.div`
   flex-direction: row;
   align-items: center;
   flex-direction: column;
-  @media (min-width: ${minWidth}) {
-    padding: 0px 15%;
-    height: 15vh;
+  @media (min-width: ${minWidth1}) {
+    padding: 0px 10%;
+  }
+  @media (min-width: ${minWidth2}) {
+    padding: 0px 10%;
+    height: 12vh;
   }
   @media (min-width: ${maxWidth}) {
-    padding: 0px 20%;
+    padding: 0px 15%;
   }
 `;
+
 
 
 export const WrapperBody = styled.div`
   display: flex;
-  flex-direction: column;
-  @media (min-width: ${minWidth}) {
-    padding: 16px 15%;
-   
-  }
-  @media (min-width: ${maxWidth}) {
-    padding: 16px 20%;
-    
-  }
+  justify-content: center;
+  align-content: center;
+  flex-direction:column;
 `;
 
 
-export const WrapperBodyBlue = styled.div`
+const WrapperBodyBlue = styled.div`
   background: #C4D7F1 !important;
+  height: 100vh;
+  @media (min-width: ${minWidth1}) {
+    height: 120vh;
+  }
+  @media (min-width: ${minWidth2}) {
+    height: 130vh;
+  }
+  @media (min-width: ${maxWidth}) {
+    height: 140vh;
+  }
+`;
+
+const WrapperBodyBlue2 = styled.div`
+  background: #C4D7F1 !important;
+  height: 100vh;
 `;
 
 const ESPACIOS_DISPONIBLES = "ListaEspacios";
@@ -96,7 +111,7 @@ class Index extends Component {
         switch (VIEW) {
           case ESPACIOS_DISPONIBLES:
             return(
-              < div style={{'background':'#C4D7F1','height':'100vh'}}>
+              < WrapperBodyBlue>
                 <WrapperHeader>
                   <HeaderSmall onBack={this.handleOnBack}/>
                 </WrapperHeader>
@@ -106,7 +121,7 @@ class Index extends Component {
                     onContinue={() => this.changeView(DETALLE_ESPACIO)}
                   />
                 </WrapperBody>
-              </div>
+              </WrapperBodyBlue>
 
             );
           case DETALLE_ESPACIO:
@@ -126,16 +141,15 @@ class Index extends Component {
             )
           case GUARDAR_DATOS:
             return(
-              < div style={{'background':'#C4D7F1','height':'100vh'}}>
+              < WrapperBodyBlue2>
                 <WrapperHeader>
                   <HeaderSmall onBack={() => this.changeView(DETALLE_ESPACIO)}/>
                 </WrapperHeader>
                 <WrapperBody>
-                  <CheckCarga
-                    
-                  />
+                  <CheckCarga />
                 </WrapperBody>
-              </div>
+               
+              </WrapperBodyBlue2>
             )
           default:
             return '';

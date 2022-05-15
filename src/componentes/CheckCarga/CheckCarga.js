@@ -1,28 +1,45 @@
 import styled from "styled-components";
 import { rem } from "polished";
 import { useEffect, useState } from "react";
-import { GuardarUsuario } from "../../servicios/servicio";
+import { GuardarSolicitudReserva, GuardarUsuario } from "../../servicios/servicio";
 import Mensaje from "../Mensaje/Mensaje";
 
 
-const minWidth = rem("640px");
+const minWidth1 = rem("600px");
+const minWidth2 = rem("750px");
 const maxWidth = rem("1200px");
 
 const Spinner = styled.div`
     display: block;
-    border: 16px solid #647B9A;
-    border-top: 16px solid #304562;
+    border: 10px solid #647B9A;
+    border-top: 10px solid #304562;
     border-radius: 50%;
-    height: 120px;
-    width: 120px;
-    margin-top: 15% !important;
+    height: 80px;
+    width: 80px;
+    margin-top: 20% !important;
     margin: auto;
     animation: spin 2s linear infinite;
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
+    margin-bottom: 7%;
+    @media (min-width: ${minWidth1}) {
+      border: 11px solid #647B9A;
+      border-top: 11px solid #304562;
+      height: 90px;
+      width: 90px;
     }
-
+    @media (min-width: ${minWidth2}) {
+      border: 12px solid #647B9A;
+      border-top: 12px solid #304562;
+      height: 100px;
+      width: 100px;
+      margin-top: 13% !important;
+    }
+    @media (min-width: ${maxWidth}) {
+      margin-top: 10% !important;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
 `;
 
 const Wrapper = styled.div`
@@ -30,38 +47,34 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
+  color: #304562;
   font-size: 30px;
   text-align: center;
-  color: #304562;
   font-weight: 600;
   font-family: rubik;
-  @media (min-width: ${minWidth}) {
-    font-size: 45px;
-    margin-left: 10px;
-    margin-top: 24px;
+  margin-top: 10px;
+  @media (min-width: ${minWidth1}) {
+    font-size: 35px;
+    margin-top: 15px;
   }
-  @media (min-width: ${maxWidth}) {
-    font-size: 53px;
-    margin-left: 14px;
-    margin-top: 10px;
-  }
+  @media (min-width: ${minWidth2}) {
+    margin-top: 0px;
+    font-size: 41px;
 `;
 
 const SubTitle = styled.h2`
+  color: #304562;
   font-size: 22px;
   text-align: center;
-  color: #304562;
   font-weight: 500;
   font-family: rubik;
-  margin: 0px;
-  padding-top: 15px;
-  @media (min-width: ${minWidth}) {
+  margin-top: 15px;
+  @media (min-width: ${minWidth1}) {
+    font-size: 25px;
+    margin-top: 20px;
+  }
+  @media (min-width: ${minWidth2}) {
     font-size: 30px;
-    padding-top: 9px;
-  }
-  @media (min-width: ${maxWidth}) {
-    font-size: 38px;
-  }
 `;
 
 const Text = styled.p`
@@ -71,12 +84,12 @@ const Text = styled.p`
   font-weight: 300;
   font-family: rubik;
   margin: 0px;
-  padding-top: 5px;
-  @media (min-width: ${minWidth}) {
-    font-size: 20px;
+  padding-top: 0px;
+  @media (min-width: ${minWidth1}) {
+    font-size: 18px;
   }
-  @media (min-width: ${maxWidth}) {
-    font-size: 25px;
+  @media (min-width: ${minWidth2}) {
+    font-size: 20px;
   }
 `;
 
@@ -88,28 +101,28 @@ const CheckCarga = () => {
     const [respuesta, setRespuesta] = useState(null);
 
     useEffect(() => {
-        setTimeout(function() {
-          const datosSolicitud = JSON.parse(localStorage.getItem('datosSolicitudReserva'))
-          console.log(datosSolicitud)
-          //calcular fecha de termino
-          /**
-           switch (datosSolicitud.tipoCobro){
-             case (Media Hora):
-               return ()
-              case (Hora):
-                return ()
-              case (Día):
-                returb()
-              case (Año):
-                return ()
-              default: 
-                return()
+      const datosSolicitud = JSON.parse(localStorage.getItem('datosSolicitudReserva'));
+      const fechaInicio = datosSolicitud.fechaInicio;
+      const totalTiempo = datosSolicitud.cantidadTiempo;
+
+      GuardarSolicitudReserva(fechaInicio, totalTiempo, datosSolicitud.cantidadEspacio, datosSolicitud.espacio, datosSolicitud.usuario)
+        .then((res)=> {
+          setTimeout(function() {
+            console.log(res)
+            if(res.status === 201){
+              setRespuesta(true)
             }
-           */
-          /*
-            Guadar en bd => GuardarSolicitudReserva
-          */
-        },3000);
+            else{
+              setRespuesta(false)
+            }
+          },2000);
+        })
+        .catch((e) => {
+          console.log('error ' + e)
+          setRespuesta(false)
+        })
+
+      
     },[])
 
     return (
@@ -129,7 +142,7 @@ const CheckCarga = () => {
 
                 : 
                     respuesta ?
-                        <Mensaje title={'Felicidades'} subtitle={'Cuenta registrada'} text={'Serás redireccionado en un momento'} tipo={'exito'} />
+                        <Mensaje title={'Felicidades'} subtitle={'Solicitud enviada'} text={'Gracias por preferirno, esperamos poder ayudarte'} tipo={'exito'} />
                 :
                     <Mensaje title={'Lo sentimos'} subtitle={'Ocurrió un error'} text={'Vuelve a intentarlo más tarde'} tipo={'error'} />
             }

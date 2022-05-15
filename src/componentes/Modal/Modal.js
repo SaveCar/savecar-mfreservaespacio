@@ -4,7 +4,10 @@ import { rem } from "polished";
 import icono_close from "./../../icon/close.svg";
 import moment from "moment";
 
-const minWidth = rem("640px");
+const minWidth1 = rem("600px");
+const minWidth2 = rem("750px");
+const minWidth3 = rem("900px");
+const minWidth4 = rem("1000px");
 const maxWidth = rem("1200px");
 
 const keyFrameExampleOne = keyframes`
@@ -15,8 +18,6 @@ const keyFrameExampleOne = keyframes`
     opacity: 1
   }
 `;
-
-
 
 const BackgroundWrapper = styled.div`
     position: absolute;
@@ -30,13 +31,24 @@ const BackgroundWrapper = styled.div`
     border-radius: 10px;
     animation: ${keyFrameExampleOne} 0.3s ease-in-out 0s;
     margin: auto;
-    @media (min-width: ${minWidth}) {
-      margin-top: -90px;
-      width: 65%;
+    @media (min-width: ${minWidth1}) {
+      width: 80%;
+    }
+    @media (min-width: ${minWidth2}) {
+      width: 80%;
+      margin-top: -30px;
+    }
+    @media (min-width: ${minWidth3}) {
+      width: 70%;
+      margin-top: -40px;
+    }
+    @media (min-width: ${minWidth4}) {
+      width: 60%;
+      margin-top: -70px;
     }
     @media (min-width: ${maxWidth}) {
       width: 55%;
-      margin-top: -110px;
+      margin-top: -75px;
     }
    
 `;
@@ -55,28 +67,37 @@ const CloseModal = styled.div`
   flex-wrap: nowrap;
   align-content: center;
   justify-content: flex-end;
-  margin: 16px;
+  margin: 16px 0px;
   margin-left: 90%;
-  @media (min-width: ${minWidth}) {
-    margin: 24px;
+  @media (min-width: ${minWidth1}) {
+    margin: 24px 0px;
     margin-left: 90%;
   }
 `;
 
 const Imagen = styled.img`
   width: 80%;
+  @media (min-width: ${minWidth1}) {
+    width: 75%;
+  }
+  @media (min-width: ${minWidth2}) {
+    width: 65%;
+  }
+  @media (min-width: ${minWidth3}) {
+    width: 55%;
+  }
   @media (min-width: ${maxWidth}) {
     width: 55%;
   }
 `;
 
 const Icono = styled.img`
-  width: 25px;
-  @media (min-width: ${minWidth}) {
-    width: 35px;
+  width: 20px;
+  @media (min-width: ${minWidth1}) {
+    width: 25px;
   }
-  @media (min-width: ${maxWidth}) {
-    width: 40px;
+  @media (min-width: ${minWidth2}) {
+    width: 30px;
   }
 `;
 
@@ -98,53 +119,48 @@ const WrapperDiv = styled.div`
 
 
 const Text = styled.p`
-  font-family: rubik;
-  font-size: 12px;
-  display: block;
-  margin: 2px 0px;
+  font-size: 16px;
+  text-align: center;
   color: #304562;
-  @media (min-width: ${minWidth}) {
-    font-size: 19px;
-  }
-  @media (min-width: ${maxWidth}) {
-    font-size: 20px;
+  font-weight: 300;
+  font-family: rubik;
+  margin: 0px;
+  padding-top: 0px;
+  @media (min-width: ${minWidth2}) {
+    font-size: 18px;
   }
 `;
 
 
-const Label = styled.label`
+export const Label = styled.label`
   font-family: rubik;
-  font-size: 14px;
   display: block;
   font-weight: 400;
   margin-bottom: 5px;
-  @media (min-width: ${minWidth}) {
-    font-size: 18px;
+  font-size: 14px;
+  @media (min-width: ${minWidth1}) {
+    font-size: 16px;
   }
-  @media (min-width: ${maxWidth}) {
-    font-size: 20px;
+  @media (min-width: ${minWidth2}) {
+    font-size: 18px;
   }
 `;
 
-const Input = styled.input`
-  display: block;
-  width: 100%;
-  padding-right: 3%;
-  height: 20px;
+export const Input = styled.input`
+  width: 95%;
+  padding: 2%;
+  height: auto;
   border-radius: 10px;
   color: #304562;
   font-family: rubik;
   font-size: 14px;
   font-weight: 300;
   text-align: right;
-  @media (min-width: ${minWidth}) {
-    height: 25px;
-    font-size: 18px;
-    padding-left: 2%;
+  @media (min-width: ${minWidth1}) {
+    font-size: 16px;
   }
-  @media (min-width: ${maxWidth}) {
-    height: 30px;
-    font-size: 20px;
+  @media (min-width: ${minWidth2}) {
+    font-size: 18px;
   }
 `;
 
@@ -156,7 +172,7 @@ const Error = styled.small`
   display: block;
   margin-right: 5%;
   text-align: right;
-  @media (min-width: ${minWidth}) {
+  @media (min-width: ${minWidth1}) {
     font-size: 16px;
   }
   @media (min-width: ${maxWidth}) {
@@ -169,7 +185,7 @@ const InputTextArea = styled.textarea`
   border-radius: 10px;
   height: 70px;
   padding: 2%;
-  @media (min-width: ${minWidth}) {
+  @media (min-width: ${minWidth1}) {
     height: 50px;
   }
   @media (min-width: ${maxWidth}) {
@@ -193,20 +209,26 @@ const Button = styled.button`
   border-radius: 100px;
   font-weight: 600;
   font-family: rubik;
-  height: 50px;
-  font-size: 18px;
-  width: 80%;
+  height: auto;
+  font-size: 16px;
+  width: auto;
   background: #F6EBCF;
   color: #304562;
-  border: 1px solid #CBBBA1; 
+  border: 1px solid #CBBBA1;
   cursor: pointer;
-  @media (min-width: ${minWidth}) {
-    font-size: 25px;
-    height: 60px;
+  padding: 2% 10%;
+  @media (min-width: ${minWidth1}) {
+    font-size: 18px;
+    height: auto;
+    width: auto;
+    padding: 2% 10%;
+  }
+  @media (min-width: ${minWidth2}) {
+    font-size: 20px;
+    padding: 1.6% 10%;
   }
   @media (min-width: ${maxWidth}) {
-    font-size: 30px;
-    height: 68px;
+    padding: 1.4% 10%;
   }
 `;
 
