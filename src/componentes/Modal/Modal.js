@@ -164,19 +164,16 @@ export const Input = styled.input`
   }
 `;
 
-const Error = styled.small`
+export const Error = styled.small`
   color: #9E2C2C;
   font-weight: 300;
   font-family: Rubik;
   font-size: 12px;
   display: block;
-  margin-right: 5%;
   text-align: right;
+  margin-right: 3%;
   @media (min-width: ${minWidth1}) {
-    font-size: 16px;
-  }
-  @media (min-width: ${maxWidth}) {
-    font-size: 18px;
+    font-size: 13px;
   }
 `;
 

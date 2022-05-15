@@ -48,15 +48,8 @@ export const WrapperBody = styled.div`
 const WrapperBodyBlue = styled.div`
   background: #C4D7F1 !important;
   height: 100vh;
-  @media (min-width: ${minWidth1}) {
-    height: 120vh;
-  }
-  @media (min-width: ${minWidth2}) {
-    height: 130vh;
-  }
-  @media (min-width: ${maxWidth}) {
-    height: 140vh;
-  }
+  position: absolute;
+  width:100%;
 `;
 
 const WrapperBodyBlue2 = styled.div`

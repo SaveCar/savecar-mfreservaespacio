@@ -44,7 +44,7 @@ export const ListaEspacios = ({listaEspacios, onContinue}) => {
         <>
             { 
                 espacios !== null ?
-                    <Wrapper style={{'marginBottom':'2%'}}>
+                    <Wrapper style={{'marginBottom':'10%'}}>
                         {listaEspaciosDisponibles}
                     </Wrapper>
                 : 
