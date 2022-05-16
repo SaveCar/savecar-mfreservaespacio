@@ -17,6 +17,7 @@ export const ListaEspacios = ({listaEspacios, onContinue}) => {
     const [espacios, setEspacios] = useState(listaEspacios);
     var listaEspaciosDisponibles = []
     
+    console.log(listaEspacios)
     
     if (espacios !== null) {
         espacios.map((data, key) => {

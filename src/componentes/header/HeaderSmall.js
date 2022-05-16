@@ -72,9 +72,13 @@ const HeaderSmall = ({onBack}) => {
   return (
     <>
       <Wrapper>
-      <span onClick={() => onBack()} style={{'cursor':'pointer'}}>
-        <LogoMenu src={icon_back}></LogoMenu>
-      </span>
+        {
+          onBack &&
+            <span onClick={() => onBack()} style={{'cursor':'pointer'}}>
+              <LogoMenu src={icon_back}></LogoMenu>
+            </span>
+        }
+      
         <WrapperTitle>
           <LogoSaveCar src={icon_save_car}/>
           <Title>SaveCar</Title>

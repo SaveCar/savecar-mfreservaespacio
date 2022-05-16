@@ -12,7 +12,7 @@ export const Espacio = ({direccion, precio, tipoCobro, comuna, tipo, disponible,
             <Styles.Card style={{'cursor':'pointer'}} onClick={() => handleContinue(espacio)}>
                 <Styles.WrapperContent>
                     <Styles.WrapperInline>
-                        <Styles.WrapperDiv>
+                        <Styles.WrapperDiv style={{'alignItems':'center'}}>
                             <Styles.WrapperImage 
                                 src={"http://127.0.0.1:8000" + imagen} alt={imagen}
                             />

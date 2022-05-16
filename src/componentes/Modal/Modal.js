@@ -119,7 +119,7 @@ const WrapperDiv = styled.div`
 
 
 const Text = styled.p`
-  font-size: 16px;
+  font-size: 12px;
   text-align: center;
   color: #304562;
   font-weight: 300;
@@ -127,7 +127,7 @@ const Text = styled.p`
   margin: 0px;
   padding-top: 0px;
   @media (min-width: ${minWidth2}) {
-    font-size: 18px;
+    font-size: 16px;
   }
 `;
 
