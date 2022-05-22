@@ -12,12 +12,12 @@ export const Espacio = ({direccion, precio, tipoCobro, comuna, tipo, disponible,
             <Styles.Card style={{'cursor':'pointer'}} onClick={() => handleContinue(espacio)}>
                 <Styles.WrapperContent>
                     <Styles.WrapperInline>
-                        <Styles.WrapperDiv style={{'alignItems':'center'}}>
+                        <Styles.WrapperDiv style={{'alignItems':'center', 'width':'40%'}}>
                             <Styles.WrapperImage 
                                 src={"http://127.0.0.1:8000" + imagen} alt={imagen}
                             />
                         </Styles.WrapperDiv>
-                        <Styles.WrapperDiv>
+                        <Styles.WrapperDiv style={{'width':'60%'}}>
                             <Styles.Text style={{'fontWeight':'400', 'textTransform':'uppercase'}}>
                                 {direccion}
                             </Styles.Text>
@@ -44,7 +44,7 @@ export const Espacio = ({direccion, precio, tipoCobro, comuna, tipo, disponible,
                                 <Styles.Text style={{'fontWeight':'400'}}>
                                     Tipo: 
                                 </Styles.Text>
-                                <Styles.Text style={{'fontWeight':'300', 'marginLeft':'2%', 'textTransform':'capitalize'}}>
+                                <Styles.Text style={{'fontWeight':'300', 'marginLeft':'2%'}}>
                                     {tipo}
                                 </Styles.Text>
                             </Styles.WrapperInline>

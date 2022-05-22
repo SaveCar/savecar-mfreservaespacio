@@ -2,22 +2,23 @@ import React, {Component} from "react";
 import * as singleSpa from "single-spa";
 import styled from "styled-components";
 import { rem } from "polished";
-import HeaderSmall from "../componentes/header/HeaderSmall.js";
 import ListaEspacios from "../componentes/ListaEspacios/ListaEspacios.js";
 import DetalleEspacio from "../componentes/DetalleEspacio/DetalleEspacio.js";
 import CheckCarga from "./../componentes/CheckCarga/CheckCarga.js";
 import FiltrosBusqueda from "./../componentes/FiltrosBusqueda/FiltrosBusqueda.js";
 import { ObtenerListaComunas, ObtenerListaTipoCobro, ObtenerListaTipoSuelo, ObtenerListaTipoVehiculo } from "../servicios/servicio.js";
 import CargarFiltros from "./../componentes/CheckCarga/CargarFiltros";
+import Header from "../../../savecar-mfregistrousuario/src/componentes/header/Header.js";
+import SolicitarReserva from "../componentes/SolicitarReserva/SolicitarReserva.js";
 
 const minWidth1 = rem("600px");
 const minWidth2 = rem("750px");
 const minWidth3 = rem("950px");
-const maxWidth = rem("1200px");
+const maxWidth = rem("1200px"); 
 
 export const WrapperHeader = styled.div`
+  background: rgba(0, 0, 0, 1);
   padding: 0px 16px;
-  background: #304562;
   height: 10vh;
   display: flex;
   justify-content: center;
@@ -37,108 +38,55 @@ export const WrapperHeader = styled.div`
     padding: 0px 15%;
   }
 `;
-
-
-
-export const WrapperBody = styled.div`
+const WrapperBody = styled.div`
+  width: 90%;
   display: flex;
   justify-content: center;
-  align-content: center;
-  flex-direction:column;
-`;
-
-
-const WrapperBodyBlue = styled.div`
-  background: #C4D7F1 !important;
-  position: absolute;
-  width:100%;
-  height: 100vh;
-  @media (min-width: ${maxWidth}) {
-    height: auto;
-  }
-`;
-
-const WrapperBodyBlue2 = styled.div`
-  background: #C4D7F1 !important;
-  height: 100vh;
-  position: absolute;
-  width:100%;
-  @media (min-width: ${maxWidth}) {
-    height: auto;
-  }
-`;
-
-export const Button = styled.button`
-  border-radius: 100px;
-  font-weight: 600;
-  font-family: rubik;
-  height: auto;
-  font-size: 16px;
-  width: auto;
-  background: #F6EBCF;
-  color: #304562;
-  border: 1px solid #CBBBA1;
-  cursor: pointer;
-  padding: 2% 6%;
-  margin-top: 16px;
-  @media (min-width: ${minWidth1}) {
-    font-size: 18px;
-    height: auto;
-    width: auto;
-    padding: 2% 6%;
-  }
-  @media (min-width: ${minWidth2}) {
-    font-size: 20px;
-    padding: 1.6% 6%;
-  }
-  @media (min-width: ${maxWidth}) {
-    padding: 1.4% 6%;
-  }
-`;
-
-const WrapperButton = styled.div`
-  display: flex;
-  justify-content: flex-end;
   align-items: center;
-  width: 94.5%;
-  @media (min-width: ${minWidth1}) {
-    width: 89.5%;
-  }
-  @media (min-width: ${minWidth2}) {
-    width: 84.5%;
-  }
-  @media (min-width: ${minWidth3}) {
-    width: 79.5%;
-  }
-  @media (min-width: ${maxWidth}) {
-    width: 74.5%;
-  }
-`;
-
-const Line = styled.hr`
-  background: rgba(203, 187, 161, 0.6);
-  border: 1px solid rgba(203, 187, 161, 0.6);
-  width: 90%;
-  margin-top: 2%;
+  align-content: center;
+  margin:auto;
+  flex-direction: column;
   @media (min-width: ${minWidth1}) {
     width: 80%;
+    margin-bottom: 24px;
   }
   @media (min-width: ${minWidth2}) {
     width: 70%;
+    margin-bottom: 24px;
   }
   @media (min-width: ${minWidth3}) {
     width: 60%;
+    margin-bottom: 24px;
   }
   @media (min-width: ${maxWidth}) {
     width: 50%;
   }
 `;
 
+
+const Title = styled.h1`
+  font-size: 32px;
+  text-align: center;
+  color: #000000;
+  font-weight: 600;
+  font-family: rubik;
+  margin-top: 10px;
+  @media (min-width: ${minWidth1}) {
+    font-size: 37px;
+    margin-top: 15px;
+  }
+  @media (min-width: ${minWidth2}) {
+    font-size: 43px;
+  }
+`;
+
+
 const ESPACIOS_DISPONIBLES = "ListaEspacios";
 const DETALLE_ESPACIO = "DetalleEspacio";
 const GUARDAR_DATOS = "CheckCarga";
 const FILTRAR_ESPACIOS = "FiltrosBusqueda";
 const CARGAR_FILTROS = "CargarFiltros";
+const SOLICITAR_RESERVA = "SolicitarReserva";
 
 
 class Index extends Component {
@@ -221,60 +169,62 @@ class Index extends Component {
         switch (VIEW) {
           case ESPACIOS_DISPONIBLES:
             return(
-              < WrapperBodyBlue>
+              <>
                 <WrapperHeader>
-                  <HeaderSmall onBack={this.handleOnBack}/>
+                  <Header onBack={this.handleOnBack}/>
                 </WrapperHeader>
                 <WrapperBody>
-                  {
-                    /*<WrapperButton>
-                      <Button
-                        onClick={() => this.handleFilterEspacio()}
-                      >Filtrar</Button>
-                    </WrapperButton>
-
-                    <Line/>*/
-                  }
+                  <Title style={{'marginBottom':'0px'}}>Espacios disponibles</Title>
                   <ListaEspacios
                     listaEspacios={ JSON.parse(localStorage.getItem('listaEspaciosFiltrados')) || JSON.parse(localStorage.getItem('listaEspaciosDisponibles'))}
                     onContinue={() => this.changeView(DETALLE_ESPACIO)}
                   />
                 </WrapperBody>
-              </WrapperBodyBlue>
+              </>
 
             );
           case DETALLE_ESPACIO:
             return(
               <>
                 <WrapperHeader>
-                  <HeaderSmall onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
+                  <Header onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
                 </WrapperHeader>
-                
                 <WrapperBody>
                   <DetalleEspacio 
                     espacio={JSON.parse(localStorage.getItem('espacioSeleccionado'))}
-                    onContinue={() => this.changeView(GUARDAR_DATOS)}
+                    onContinue={() => this.changeView(SOLICITAR_RESERVA)}
                   />
+                </WrapperBody>
+              </>
+            )
+          case SOLICITAR_RESERVA:
+            return(
+              <>
+                <WrapperHeader>
+                  <Header onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
+                </WrapperHeader>
+                <WrapperBody>
+                  <SolicitarReserva />
                 </WrapperBody>
               </>
             )
           case GUARDAR_DATOS:
             return(
-              < WrapperBodyBlue2>
+              <>
                 <WrapperHeader>
-                  <HeaderSmall />
+                  <Header/>
                 </WrapperHeader>
+
                 <WrapperBody style={{'padding':'0px 16px'}}>
                   <CheckCarga />
                 </WrapperBody>
-               
-              </WrapperBodyBlue2>
+              </>
             )
           case FILTRAR_ESPACIOS:
             return(
               <>
                 <WrapperHeader>
-                  <HeaderSmall onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
+                  <Header onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
                 </WrapperHeader>
                 
                 <WrapperBody>
@@ -286,15 +236,14 @@ class Index extends Component {
             )
           case CARGAR_FILTROS:
             return(
-              < WrapperBodyBlue2>
+              <>
                 <WrapperHeader>
-                  <HeaderSmall/>
+                  <Header/>
                 </WrapperHeader>
                 <WrapperBody>
                   <CargarFiltros onContinue={() => this.changeView(ESPACIOS_DISPONIBLES)} />
                 </WrapperBody>
-               
-              </WrapperBodyBlue2>
+              </>
             )
           default:
             return '';

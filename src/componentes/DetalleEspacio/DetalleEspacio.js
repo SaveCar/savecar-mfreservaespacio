@@ -1,20 +1,15 @@
 import * as Styles from "./Styles.js";
-import arrow_down from "./../../icon/arrow_down.png";
-import arrow_up from "./../../icon/arrow_up.png";
+import arrow_down from "./../../icon/arrrow_down.png";
+import arrow_up from "./../../icon/arrrow_up.png";
 import { useEffect, useState } from "react";
 import FondoOpaco from "../Modal/FondoOpaco.js";
 import Modal from "../Modal/Modal.js";
 
+
 export const DetalleEspacio = ({espacio, onContinue}) => {
 
     const[descripcionDisabled, setDescripcionDisabled] = useState(true)
-    const[comentarioDisabled, setComentarioDisabled] = useState(true)
-    const [mainState, setMainState] = useState({
-        isModalOpen: false,
-        isModalClose: false
-    });
     var listaServiciosEspacio = []
-
  
     if (espacio.listaServicios.length > 0) {
         espacio.listaServicios.map(data => {
@@ -24,37 +19,16 @@ export const DetalleEspacio = ({espacio, onContinue}) => {
 
     const handleDescription = () => {
         if(descripcionDisabled){
-            console.log('mostrar descripcion')
             setDescripcionDisabled(false)
         }else{
-            console.log('ocultar descripcion')
             setDescripcionDisabled(true)
         }
     }
 
-    
-    const openModal = () => {
-        setMainState((prev) => ({ ...prev, ["isModalOpen"]: true }));
-    };
-
-  
 
     return(
         <>
             <Styles.Wrapper>
-                <Modal
-                    isOpen={mainState.isModalOpen}
-                    onClose={() =>
-                        setMainState((prev) => ({ ...prev, ["isModalOpen"]: false }))
-                    }
-                    image={"http://127.0.0.1:8000" + espacio.imagenEspacio}
-                    disponible={espacio.disponible}
-                    tipoCobro={espacio.tipoCobro}
-                    setMainState={setMainState}
-                    onContinue={onContinue}
-                    precio={espacio.precio}
-                    espacio={espacio.idEspacio}
-                />
                 <Styles.WrapperTitle>
                     <Styles.Title style={{'textTransform':'uppercase'}}>
                         {espacio.direccion}, {espacio.comuna[0].nombreComuna}
@@ -109,9 +83,9 @@ export const DetalleEspacio = ({espacio, onContinue}) => {
                     </Styles.TextBanner>
                     {
                         descripcionDisabled ?
-                            <img src={arrow_down} style={{'marginRight':'10%'}}/>
+                            <Styles.LogoArrow src={arrow_down} style={{'marginRight':'10%'}}/>
                         : 
-                            <img src={arrow_up} style={{'marginRight':'10%'}}/>
+                            <Styles.LogoArrow src={arrow_up} style={{'marginRight':'10%'}}/>
                            
                     }
                     
@@ -178,16 +152,12 @@ export const DetalleEspacio = ({espacio, onContinue}) => {
                 }
 
                 <Styles.WrapperInline style={{'justifyContent': 'center'}}>
-                    <Styles.Button onClick={() => openModal()}>
+                    <Styles.Button onClick={() => onContinue()}>
                         SOLICITAR RESERVA
                     </Styles.Button>
                 </Styles.WrapperInline>
                
             </Styles.Wrapper>
-            
-            <FondoOpaco
-                isVisible={mainState.isModalOpen}
-            />
         </>
     )
 }
