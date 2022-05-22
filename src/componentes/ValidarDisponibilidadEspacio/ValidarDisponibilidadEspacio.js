@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import { rem } from "polished";
 import { useEffect, useState } from "react";
+import { GuardarSolicitudReserva, GuardarUsuario } from "../../servicios/servicio";
+import Mensaje from "../Mensaje/Mensaje";
+
 
 const minWidth1 = rem("600px");
 const minWidth2 = rem("750px");
@@ -93,42 +96,39 @@ const Text = styled.p`
 
 
 
-const CargarFiltros = ({onContinue}) => {
+const ValidarDisponibilidadEspacio = () => {
+
+    const [respuesta, setRespuesta] = useState(null);
 
     useEffect(() => {
-      const filtros = JSON.parse(localStorage.getItem('filtrosBusquedaEspacio'));
-      const listaFiltrosAplicados = [];
-
-      if (filtros.comuna === null && filtros.cobro === null && filtros.vehiculo === null && filtros.suelo === null && filtros.techo === null){
-        setTimeout(() => {
-          onContinue();
-        }, 1000)
-      }
-
-      if (filtros.comuna !== null){
-        listaFiltrosAplicados.push('comuna')
-      }
-
       
-
-      //listaEspaciosFiltrados
       
     },[])
 
     return (
         <>
-          <Wrapper>
-              <Spinner/>
-              <Title/>
-              <SubTitle>
-                Buscando espacio
-              </SubTitle>
-              <Text>
-                  Puede demorar unos minutos
-              </Text>
-          </Wrapper>
+            { 
+                respuesta === null ?
+                    <Wrapper>
+                        <Spinner/>
+                        <Title/>
+                        <SubTitle>
+                            Verificando disponibilidad del espacio
+                        </SubTitle>
+                        <Text>
+                            Puede demorar unos minutos
+                        </Text>
+                    </Wrapper>
+
+                : 
+                    respuesta ?
+                        <Mensaje title={'Felicidades'} subtitle={'Solicitud enviada'} text={'Gracias por preferirno, esperamos poder ayudarte'} tipo={'exito'} />
+                :
+                    <Mensaje title={'Lo sentimos'} subtitle={'Ocurrió un error'} text={'Vuelve a intentarlo más tarde'} tipo={'error'} />
+            }
         </>
+      
     );
   };
   
-  export default CargarFiltros;
+  export default ValidarDisponibilidadEspacio;

@@ -25,6 +25,10 @@ export const DetalleEspacio = ({espacio, onContinue}) => {
         }
     }
 
+    const handleOnContinue = (data) => {
+        localStorage.setItem('dataConfirmacionReservaCliente', JSON.stringify(data))
+        onContinue()
+    }
 
     return(
         <>
@@ -152,7 +156,7 @@ export const DetalleEspacio = ({espacio, onContinue}) => {
                 }
 
                 <Styles.WrapperInline style={{'justifyContent': 'center'}}>
-                    <Styles.Button onClick={() => onContinue()}>
+                    <Styles.Button onClick={() => handleOnContinue(espacio)}>
                         SOLICITAR RESERVA
                     </Styles.Button>
                 </Styles.WrapperInline>

@@ -7,9 +7,9 @@ import DetalleEspacio from "../componentes/DetalleEspacio/DetalleEspacio.js";
 import CheckCarga from "./../componentes/CheckCarga/CheckCarga.js";
 import FiltrosBusqueda from "./../componentes/FiltrosBusqueda/FiltrosBusqueda.js";
 import { ObtenerListaComunas, ObtenerListaTipoCobro, ObtenerListaTipoSuelo, ObtenerListaTipoVehiculo } from "../servicios/servicio.js";
-import CargarFiltros from "./../componentes/CheckCarga/CargarFiltros";
 import Header from "../../../savecar-mfregistrousuario/src/componentes/header/Header.js";
 import SolicitarReserva from "../componentes/SolicitarReserva/SolicitarReserva.js";
+import ValidarDisponibilidadEspacio from "../componentes/ValidarDisponibilidadEspacio/ValidarDisponibilidadEspacio.js";
 
 const minWidth1 = rem("600px");
 const minWidth2 = rem("750px");
@@ -87,6 +87,8 @@ const GUARDAR_DATOS = "CheckCarga";
 const FILTRAR_ESPACIOS = "FiltrosBusqueda";
 const CARGAR_FILTROS = "CargarFiltros";
 const SOLICITAR_RESERVA = "SolicitarReserva";
+const VALIDAR_DISPONIBILIDAD = "ValidarDisponibilidadEspacio";
+const CONFIRMAR_DATOS = "";
 
 
 class Index extends Component {
@@ -104,7 +106,7 @@ class Index extends Component {
 
     configureViews = () => {
         if(this.state.espacios){
-            this.setState({VIEW: ESPACIOS_DISPONIBLES});
+            this.setState({VIEW: SOLICITAR_RESERVA});
         }
     };
 
@@ -204,7 +206,21 @@ class Index extends Component {
                   <Header onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
                 </WrapperHeader>
                 <WrapperBody>
-                  <SolicitarReserva />
+                  <SolicitarReserva 
+                    onContinue={() => this.changeView(VALIDAR_DISPONIBILIDAD)}
+                  />
+                </WrapperBody>
+              </>
+            )
+          case VALIDAR_DISPONIBILIDAD:
+            return(
+              <>
+                 <WrapperHeader>
+                  <Header/>
+                </WrapperHeader>
+
+                <WrapperBody style={{'padding':'0px 16px'}}>
+                  <ValidarDisponibilidadEspacio />
                 </WrapperBody>
               </>
             )
@@ -231,17 +247,6 @@ class Index extends Component {
                   <FiltrosBusqueda
                     onContinue={() => this.changeView(CARGAR_FILTROS)}
                   />
-                </WrapperBody>
-              </>
-            )
-          case CARGAR_FILTROS:
-            return(
-              <>
-                <WrapperHeader>
-                  <Header/>
-                </WrapperHeader>
-                <WrapperBody>
-                  <CargarFiltros onContinue={() => this.changeView(ESPACIOS_DISPONIBLES)} />
                 </WrapperBody>
               </>
             )
