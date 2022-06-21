@@ -16,8 +16,7 @@ export const ListaEspacios = ({listaEspacios, onContinue}) => {
 
     const [espacios, setEspacios] = useState(listaEspacios);
     var listaEspaciosDisponibles = []
-    
-    console.log(listaEspacios)
+
     
     if (espacios !== null) {
         espacios.map((data, key) => {
@@ -28,7 +27,7 @@ export const ListaEspacios = ({listaEspacios, onContinue}) => {
                     tipoCobro={data.tipoCobro}
                     comuna={data.comuna}
                     tipo={data.vehiculo}
-                    disponible={data.disponible}
+                    capacidad={data.capacidad}
                     imagen={data.imagenEspacio}
                     key={key}
                     espacio={data}

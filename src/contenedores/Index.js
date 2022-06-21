@@ -106,7 +106,7 @@ class Index extends Component {
 
     configureViews = () => {
         if(this.state.espacios){
-            this.setState({VIEW: SOLICITAR_RESERVA});
+            this.setState({VIEW: ESPACIOS_DISPONIBLES});
         }
     };
 
@@ -220,7 +220,7 @@ class Index extends Component {
                 </WrapperHeader>
 
                 <WrapperBody style={{'padding':'0px 16px'}}>
-                  <ValidarDisponibilidadEspacio />
+                  <ValidarDisponibilidadEspacio onBack={() => this.changeView(ESPACIOS_DISPONIBLES)}/>
                 </WrapperBody>
               </>
             )

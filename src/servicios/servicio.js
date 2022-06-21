@@ -8,13 +8,14 @@ const headers = {
 };
 
 
-export const GuardarSolicitudReserva = (fechaIniReserva, totalTiempoReserva, capacidadReserva, espacio, usuario) => {
+export const GuardarSolicitudReserva = (fechaIniReserva, fechaTerminoReserva, capacidadReserva,precio, espacio, usuario) => {
   return axios.post(
     `http://127.0.0.1:8000/api/guardar/solicitud-reserva`,
     {  
       fechaIniReserva : fechaIniReserva,
-      totalTiempoReserva: totalTiempoReserva, 
+      fechaTerminoReserva: fechaTerminoReserva,
       capacidadReserva: capacidadReserva,
+      precioReserva: precio,
       espacio : espacio,
       usuario : usuario
     },
@@ -61,5 +62,12 @@ export const ObtenerListaTipoSuelo = () => {
     {
       headers
     }
+  )
+}
+
+
+export const ValidarDisponibilidadByIdEspacioFInicioFTerminoCantidad = (idEspacio, fInicio, fTermino, cantidad) => {
+  return axios.get(
+    `http://127.0.0.1:8000/api/verificar/disponibilidad/${idEspacio}/${fInicio}/${fTermino}/${cantidad}`
   )
 }

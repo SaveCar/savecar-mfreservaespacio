@@ -265,6 +265,11 @@ export const DisabledErrorMessage= styled.div`
     }
 `;
 
+export const LineSmall = styled.hr`
+  border: 1px solid #000000;
+  background: #000000;
+  width: 100%;
+`;
 
 
 
